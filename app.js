@@ -4,12 +4,15 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
 import userRoutes from "./routes/user.routes.js";
+import accountRoutes from "./routes/account.routes.js";
+import { swaggerDocs } from './swagger.js';
 
 // Load environment variables
 dotenv.config({path: path.resolve('./.env')});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+swaggerDocs(app);
 
 // Connect DB function
 const connectDB = async () => {
@@ -40,10 +43,13 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRoutes);
+app.use("/api/account", accountRoutes);
 
 // Call DB and then start server
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+     console.log(`Swagger UI: http://localhost:${PORT}/api-docs`);
+      console.log(`Swagger JSON: http://localhost:${PORT}/api-docs-json`)
   });
 });
