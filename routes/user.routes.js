@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser } from "../controllers/user.controller.js";
+import { createUser, getUsers } from "../controllers/user.controller.js";
 
 const Routes = express.Router();
 
@@ -45,5 +45,52 @@ const Routes = express.Router();
  *         description: Server error
  */
 Routes.post("/create", createUser);
+
+
+/**
+ * @swagger
+ * /api/user/getusers:
+ *   post:
+ *     summary: Get list of users with basic profile details
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: User list fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 statusCode:
+ *                   type: number
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       username:
+ *                         type: string
+ *                       profileImage:
+ *                         type: string
+ *                       bio:
+ *                         type: string
+ *                       isVerified:
+ *                         type: boolean
+ *                       followersCount:
+ *                         type: number
+ *                       followingCount:
+ *                         type: number
+ *                       postsCount:
+ *                         type: number
+ *       500:
+ *         description: Server error
+ */
+Routes.post("/getusers", getUsers);
 
 export default Routes;
